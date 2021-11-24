@@ -3,34 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="150dp">
 
-        <ImageView
-            android:id="@+id/image_view_upcoming"
-            android:layout_width="80dp"
-            android:layout_height="120dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/image_card_view_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:background="@color/black"
+            app:cardCornerRadius="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_view_upcoming"
+                android:layout_width="80dp"
+                android:layout_height="120dp"
+                android:background="@color/black"/>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/title_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_view_upcoming"
+            app:layout_constraintHorizontal_bias="0.187"
+            app:layout_constraintStart_toEndOf="@+id/image_card_view_upcoming"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Mulan Session"/>
+            app:layout_constraintVertical_bias="0.227"
+            tools:text="Mulan Session" />
+
+        <TextView
+            android:id="@+id/genre_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="76dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.141"
+            app:layout_constraintStart_toEndOf="@+id/image_card_view_upcoming"
+            tools:text="History, War" />
+
+        <TextView
+            android:id="@+id/rating_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.118"
+            app:layout_constraintStart_toEndOf="@+id/image_card_view_upcoming"
+            tools:text="3.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
