@@ -42,4 +42,13 @@
         app:layout_constraintTop_toBottomOf="@id/recycler_view_now_playing"
         tools:text="Upcoming" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_upcoming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upcoming_text" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

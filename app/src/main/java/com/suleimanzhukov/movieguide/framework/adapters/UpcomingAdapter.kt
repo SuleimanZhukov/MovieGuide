@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.suleimanzhukov.movieguide.databinding.RecycleViewUpcomingItemBinding
 import com.suleimanzhukov.movieguide.model.entities.Movie
 
-class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.MainViewHolder>() {
+class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
     private lateinit var binding: RecycleViewUpcomingItemBinding
     private var moviesData: List<Movie> = listOf()
 
@@ -18,19 +18,21 @@ class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.MainViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind() {
+    inner class UpcomingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(movie: Movie) = with(binding) {
+            titleUpcoming.text = movie.title
+            genreUpcoming.text = movie.genre
 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingViewHolder {
         binding = RecycleViewUpcomingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MainViewHolder(binding.root)
+        return UpcomingViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind()
+    override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
+        holder.bind(moviesData[position])
     }
 
     override fun getItemCount(): Int {
