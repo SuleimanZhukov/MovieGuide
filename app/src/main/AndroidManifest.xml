@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieGuide">
         <activity
-            android:name=".framework.ui.MainActivity"
+            android:name=".framework.MainActivity"
             android:exported="true" />
     </application>
 

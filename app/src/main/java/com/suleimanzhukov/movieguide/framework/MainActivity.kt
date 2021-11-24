@@ -1,4 +1,4 @@
-package com.suleimanzhukov.movieguide.framework.ui
+package com.suleimanzhukov.movieguide.framework
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -3,11 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/fragment_details.xml" value="0.36666666666666664" />
-        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/fragment_main.xml" value="0.21784420289855072" />
-        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/recycle_view_nowplaying_item.xml" value="0.33" />
-        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/recycle_view_upcoming_item.xml" value="0.33" />
+        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/fragment_details.xml" value="0.2" />
+        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/fragment_main.xml" value="0.19" />
+        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/recycle_view_nowplaying_item.xml" value="0.22" />
+        <entry key="..\:/Programs/Portfolio/MovieGuide/app/src/main/res/layout/recycle_view_upcoming_item.xml" value="0.2" />
       </map>
     </option>
   </component>
