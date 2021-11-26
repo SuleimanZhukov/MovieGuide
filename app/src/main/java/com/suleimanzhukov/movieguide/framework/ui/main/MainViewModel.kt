@@ -3,15 +3,15 @@ package com.suleimanzhukov.movieguide.framework.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.suleimanzhukov.movieguide.AppState
-import com.suleimanzhukov.movieguide.model.repository.RepositoryImpl
+import com.suleimanzhukov.movieguide.model.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val repository: RepositoryImpl
-) : ViewModel(), CoroutineScope by MainScope() {
+    private val repository: Repository
+) : ViewModel() {
 
     private val mainLiveData: MutableLiveData<AppState> = MutableLiveData()
 
@@ -21,9 +21,9 @@ class MainViewModel(
 
     private fun getDataFromServer() {
         mainLiveData.value = AppState.Loading
-        launch(Dispatchers.IO) {
+        Thread {
             mainLiveData.postValue(AppState.Success(repository.getNowPlayingMovies()))
             mainLiveData.postValue(AppState.Success(repository.getUpcomingMovies()))
-        }
+        }.start()
     }
 }

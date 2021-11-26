@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.RecycleViewNowplayingItemBinding
 import com.suleimanzhukov.movieguide.framework.MainActivity
@@ -31,6 +32,7 @@ class NowPlayingAdapter(
             titleNowPlaying.text = movie.title
             genreNowPlaying.text = movie.genre
             ratingNowPlaying.text = movie.rating
+            imageViewNowPlaying.load(movie.poster)
             root.setOnClickListener {
                 object : OnItemClickListener {
                     override fun onMovieClickListener() {

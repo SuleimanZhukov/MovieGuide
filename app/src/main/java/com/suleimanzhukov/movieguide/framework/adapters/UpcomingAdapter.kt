@@ -1,14 +1,22 @@
 package com.suleimanzhukov.movieguide.framework.adapters
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.RecycleViewUpcomingItemBinding
+import com.suleimanzhukov.movieguide.framework.OnItemClickListener
+import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
 import com.suleimanzhukov.movieguide.model.entities.Movie
 
-class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+class UpcomingAdapter(
+    private val activity: FragmentActivity
+) : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
     private lateinit var binding: RecycleViewUpcomingItemBinding
     private var moviesData: List<Movie> = listOf()
 
@@ -22,7 +30,22 @@ class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>
         fun bind(movie: Movie) = with(binding) {
             titleUpcoming.text = movie.title
             genreUpcoming.text = movie.genre
+            imageViewUpcoming.load(movie.poster)
+            root.setOnClickListener {
+                object : OnItemClickListener {
+                    override fun onMovieClickListener() {
+                        val bundle = Bundle().apply {
+                            putString(DetailsFragment.DETAILS_KEY, movie.id)
+                        }
 
+                        activity.supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
+                            .addToBackStack("")
+                            .commitAllowingStateLoss()
+                    }
+                }
+            }
         }
     }
 
