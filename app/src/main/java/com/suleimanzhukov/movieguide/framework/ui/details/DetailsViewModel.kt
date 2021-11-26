@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.suleimanzhukov.movieguide.AppState
 import com.suleimanzhukov.movieguide.framework.App
+import com.suleimanzhukov.movieguide.model.entities.Movie
 import com.suleimanzhukov.movieguide.model.repository.RepositoryImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,12 +19,12 @@ class DetailsViewModel(
 
     fun getDetailsLiveData() = detailsLiveData
 
-    fun getDetailsData() = getDataFromServer()
+    fun getDetailsData(id: String) = getDataFromServer(id)
 
-    private fun getDataFromServer() {
+    private fun getDataFromServer(id: String) {
         detailsLiveData.value = AppState.Loading
         launch(Dispatchers.IO) {
-            detailsLiveData.postValue(AppState.SuccessOneMovie(repository.getMovieById("")))
+            detailsLiveData.postValue(AppState.SuccessOneMovie(repository.getMovieById(id)))
         }
     }
 

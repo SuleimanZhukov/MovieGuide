@@ -23,7 +23,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         detailsViewModel.getDetailsLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
-        detailsViewModel.getDetailsData()
+        detailsViewModel.getDetailsData(arguments?.getString(DETAILS_KEY) ?: "")
     }
 
     private fun renderData(appState: AppState) = with(binding) {

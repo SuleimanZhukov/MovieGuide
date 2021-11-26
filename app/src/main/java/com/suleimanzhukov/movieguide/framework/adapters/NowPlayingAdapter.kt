@@ -21,7 +21,7 @@ class NowPlayingAdapter(
     private var moviesData: List<Movie> = listOf()
 
     @SuppressLint("notifyDataSetChanged")
-    fun setUpcomingMovies(data: List<Movie>) {
+    fun setNowPlayingMovies(data: List<Movie>) {
         moviesData = data
         notifyDataSetChanged()
     }
@@ -35,7 +35,7 @@ class NowPlayingAdapter(
                 object : OnItemClickListener {
                     override fun onMovieClickListener() {
                         val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, movie)
+                            putString(DetailsFragment.DETAILS_KEY, movie.id)
                         }
 
                         activity.supportFragmentManager
