@@ -13,7 +13,7 @@ interface MovieApi {
         @Query("") id: String
     ): Call<Items>
 
-    @GET("Posters/k_qnnx4mmj")
+    @GET("Posters/k_qnnx4mmj/tt2953050")
     fun getMoviePosterById(
         @Query("") id: String
     ): Call<PosterDTO>

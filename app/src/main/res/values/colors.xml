@@ -6,5 +6,20 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+
+    <!-- Light theme -->
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#C7C7C7</color>
+
+    <!-- Secondary Light theme -->
+    <color name="secondary_light_theme">#90a4ae</color>
+    <color name="secondary_variant_light_theme">#62757f</color>
+
+    <!-- Dark theme -->
+    <color name="primary_dark_theme">#424242</color>
+    <color name="primary_variant_dark_theme">#1b1b1b</color>
+
+    <!-- Secondary dark theme -->
+    <color name="secondary_dark_theme">#37474f</color>
+    <color name="secondary_variant_dark_theme">#102027</color>
 </resources>
