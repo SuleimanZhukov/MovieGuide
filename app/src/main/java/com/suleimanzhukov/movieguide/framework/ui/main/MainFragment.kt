@@ -33,23 +33,27 @@ class MainFragment : Fragment() {
 
     private fun renderData(appState: AppState) = with(binding) {
         when (appState) {
-            is AppState.Success -> {
-                val nowPlayingAdapter = NowPlayingAdapter(requireActivity())
-                val upcomingAdapter = UpcomingAdapter(requireActivity())
-
-                nowPlayingAdapter.setNowPlayingMovies(appState.movies)
-                upcomingAdapter.setUpcomingMovies(appState.movies)
-
-                recyclerViewNowPlaying.adapter = nowPlayingAdapter
-                recyclerViewUpcoming.adapter = upcomingAdapter
-                recyclerViewNowPlaying.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                recyclerViewUpcoming.layoutManager = LinearLayoutManager(context)
-            }
             is AppState.Loading -> {
 
             }
             is AppState.Error -> {
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+            is AppState.SuccessNowPlaying -> {
+                val nowPlayingAdapter = NowPlayingAdapter(requireActivity())
+
+                nowPlayingAdapter.setNowPlayingMovies(appState.nowPlayingMovies)
+
+                recyclerViewNowPlaying.adapter = nowPlayingAdapter
+                recyclerViewNowPlaying.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            }
+            is AppState.SuccessUpcoming -> {
+                val upcomingAdapter = UpcomingAdapter(requireActivity())
+
+                upcomingAdapter.setUpcomingMovies(appState.upcomingMovies)
+
+                recyclerViewUpcoming.adapter = upcomingAdapter
+                recyclerViewUpcoming.layoutManager = LinearLayoutManager(context)
             }
         }
     }
