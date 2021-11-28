@@ -15,7 +15,7 @@ interface MovieApi {
 
     @GET("Posters/k_qnnx4mmj/tt2953050")
     fun getMoviePosterById(
-        @Query("") id: String
+//        @Query("id") id: String
     ): Call<PosterDTO>
 
     @GET("InTheaters/k_qnnx4mmj")
