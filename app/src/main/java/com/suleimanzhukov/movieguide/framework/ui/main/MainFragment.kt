@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.suleimanzhukov.movieguide.AppState
+import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.FragmentMainBinding
 import com.suleimanzhukov.movieguide.framework.adapters.NowPlayingAdapter
 import com.suleimanzhukov.movieguide.framework.adapters.UpcomingAdapter
+import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
+import com.suleimanzhukov.movieguide.framework.ui.wishlist.WishlistFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
@@ -27,6 +30,13 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.openWishlistButton.setOnClickListener {
+            activity?.supportFragmentManager!!
+                .beginTransaction()
+                .replace(R.id.container_de_fragmento, WishlistFragment.newInstance())
+                .addToBackStack("")
+                .commitAllowingStateLoss()
+        }
         mainViewModel.getMainLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
         mainViewModel.getMainData()
     }

@@ -5,5 +5,6 @@ data class Items(
     val title: String,
     val genres: String,
     val imDbRating: String,
+    val overview: String,
     val image: String
 )

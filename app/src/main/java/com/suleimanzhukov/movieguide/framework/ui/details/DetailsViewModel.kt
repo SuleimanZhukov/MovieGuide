@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel(
     private val repository: Repository
-) : ViewModel() {
+) : ViewModel(), CoroutineScope by MainScope() {
 
     private val detailsLiveData: MutableLiveData<AppState> = MutableLiveData()
 
@@ -21,9 +21,9 @@ class DetailsViewModel(
 
     private fun getDataFromServer(id: String) {
         detailsLiveData.value = AppState.Loading
-        Thread {
+        launch(Dispatchers.IO) {
             detailsLiveData.postValue(AppState.SuccessOneMovie(repository.getMovieById(id)))
-        }.start()
+        }
     }
 
 }
