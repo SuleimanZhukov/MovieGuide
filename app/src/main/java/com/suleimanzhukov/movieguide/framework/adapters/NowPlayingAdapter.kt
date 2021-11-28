@@ -37,7 +37,7 @@ class NowPlayingAdapter(
                 object : OnItemClickListener {
                     override fun onMovieClickListener() {
                         val bundle = Bundle().apply {
-                            putString(DetailsFragment.DETAILS_KEY, movie.id)
+                            putParcelable(DetailsFragment.DETAILS_KEY, movie)
                         }
 
                         activity.supportFragmentManager

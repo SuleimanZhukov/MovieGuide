@@ -11,5 +11,5 @@ data class Movie(
     val rating: String,
     val overview: String,
     val poster: String,
-    val wishlist: Boolean
+    var wishlist: Boolean
 ) : Parcelable

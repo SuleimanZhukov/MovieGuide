@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
+import coil.load
 import com.suleimanzhukov.movieguide.AppState
 import com.suleimanzhukov.movieguide.databinding.FragmentDetailsBinding
+import com.suleimanzhukov.movieguide.model.entities.Movie
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment : Fragment() {
@@ -22,17 +25,47 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val movie: Movie? = arguments?.getParcelable(DETAILS_KEY)
+        addToWishlist(movie!!)
         detailsViewModel.getDetailsLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
-        detailsViewModel.getDetailsData(arguments?.getString(DETAILS_KEY) ?: "")
+        detailsViewModel.getDetailsData(movie.id)
     }
 
     private fun renderData(appState: AppState) = with(binding) {
+        when (appState) {
+            is AppState.Loading -> {
 
+            }
+            is AppState.Error -> {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+            is AppState.SuccessOneMovie -> {
+                titleDetails.text = appState.movie.title
+                genreDetails.text = appState.movie.genre
+                overviewDetails.text = appState.movie.overview
+                posterDetails.load(appState.movie.poster)
+            }
+            else -> {
+
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun addToWishlist(movie: Movie) = with(binding) {
+        wishlistButton.setOnClickListener {
+            movie.wishlist = !movie.wishlist
+            if (movie.wishlist) {
+                detailsViewModel.addMovieToWishlist(movie)
+            } else {
+                detailsViewModel.removeMovieFromWishlist(movie)
+            }
+
+        }
     }
 
     companion object {

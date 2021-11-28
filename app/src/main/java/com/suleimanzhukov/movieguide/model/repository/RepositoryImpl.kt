@@ -51,11 +51,15 @@ class RepositoryImpl : Repository {
         return upcomingMovies
     }
 
-    override fun saveMovieToDB(movie: Movie) =
+    override fun saveMovieToDB(movie: Movie): Movie {
         WishlistDatabase.db.wishlistDao().insert(convertMovieToWishlistEntity(movie))
+        return movie
+    }
 
-    override fun removeFromDB(id: String) {
-        WishlistDatabase.db.wishlistDao().delete(id)
+
+    override fun removeFromDB(movie: Movie): Movie {
+        WishlistDatabase.db.wishlistDao().delete(movie.id)
+        return movie
     }
 
     override fun getAllMoviesFromDB(): List<Movie> =

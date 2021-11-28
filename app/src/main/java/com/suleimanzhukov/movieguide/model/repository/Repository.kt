@@ -9,8 +9,8 @@ interface Repository {
     fun getUpcomingMovies(): List<Movie>
 
     //Database
-    fun saveMovieToDB(movie: Movie)
-    fun removeFromDB(id: String)
+    fun saveMovieToDB(movie: Movie): Movie
+    fun removeFromDB(movie: Movie) : Movie
     fun getAllMoviesFromDB(): List<Movie>
     fun getMovieByIdFromDB(id: String): Movie
 }
