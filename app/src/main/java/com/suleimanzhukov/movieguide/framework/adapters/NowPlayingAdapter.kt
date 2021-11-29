@@ -16,7 +16,7 @@ import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
 import com.suleimanzhukov.movieguide.model.entities.Movie
 
 class NowPlayingAdapter(
-    private val activity: FragmentActivity
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>() {
     private lateinit var binding: RecycleViewNowplayingItemBinding
     private var moviesData: List<Movie> = listOf()
@@ -33,21 +33,7 @@ class NowPlayingAdapter(
             genreNowPlaying.text = movie.genre
             ratingNowPlaying.text = movie.rating
             imageViewNowPlaying.load(movie.poster)
-            root.setOnClickListener {
-                object : OnItemClickListener {
-                    override fun onMovieClickListener() {
-                        val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, movie)
-                        }
-
-                        activity.supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
-                            .addToBackStack("")
-                            .commitAllowingStateLoss()
-                    }
-                }
-            }
+            root.setOnClickListener { onItemClickListener.onMovieClickListener() }
         }
     }
 

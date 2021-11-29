@@ -22,8 +22,7 @@ class RepositoryImpl : Repository {
     override fun getNowPlayingMovies(): List<Movie> {
         val dto = MovieRepo.api.getNowPlayingMovies().execute().body()
         var nowPlayingMovies = mutableListOf<Movie>()
-        val size = dto!!.items.size - 1
-        for (i in 0..size) {
+        for (i in dto!!.items.indices) {
             var postersDto = MovieRepo.api.getMoviePosterById().execute().body()
             var posterId = postersDto!!.backdrops[0].id
             val posterPath = "https://imdb-api.com/posters/w300/$posterId"
@@ -38,8 +37,7 @@ class RepositoryImpl : Repository {
     override fun getUpcomingMovies(): List<Movie> {
         val dto = MovieRepo.api.getUpcomingMovies().execute().body()
         var upcomingMovies = mutableListOf<Movie>()
-        val size = dto!!.items.size - 1
-        for (i in 0..size) {
+        for (i in dto!!.items.indices) {
             var postersDto = MovieRepo.api.getMoviePosterById().execute().body()
             var posterId = postersDto!!.posters[0].id
             var posterPath = "https://imdb-api.com/posters/w300/$posterId"

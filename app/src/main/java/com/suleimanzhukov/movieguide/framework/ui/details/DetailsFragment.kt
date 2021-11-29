@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.Observer
 import coil.load
 import com.suleimanzhukov.movieguide.AppState
 import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.FragmentDetailsBinding
+import com.suleimanzhukov.movieguide.framework.MainActivity
 import com.suleimanzhukov.movieguide.model.entities.Movie
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -70,15 +70,25 @@ class DetailsFragment : Fragment() {
 
     private fun addToWishlist(movie: Movie) = with(binding) {
         wishlistButton.setOnClickListener {
-            movie.wishlist = !movie.wishlist
-            if (movie.wishlist) {
-                wishlistButton.load(R.drawable.red_heart)
-                detailsViewModel.addMovieToWishlist(movie)
+            if ((activity as MainActivity).checkPermission()) {
+                toWishlistFunction(movie)
             } else {
-                wishlistButton.load(R.drawable.empty_heart)
-                detailsViewModel.removeMovieFromWishlist(movie)
+                (activity as MainActivity).requestPermission()
+                if ((activity as MainActivity).checkPermission()) {
+                    toWishlistFunction(movie)
+                }
             }
+        }
+    }
 
+    private fun toWishlistFunction(movie: Movie) = with(binding) {
+        movie.wishlist = !movie.wishlist
+        if (movie.wishlist) {
+            wishlistButton.load(R.drawable.red_heart)
+            detailsViewModel.addMovieToWishlist(movie)
+        } else {
+            wishlistButton.load(R.drawable.empty_heart)
+            detailsViewModel.removeMovieFromWishlist(movie)
         }
     }
 
