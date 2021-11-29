@@ -14,19 +14,19 @@ import com.suleimanzhukov.movieguide.framework.OnItemClickListener
 import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
 import com.suleimanzhukov.movieguide.model.entities.Movie
 
-class UpcomingAdapter(
+class WishlistAdapter(
     private val activity: FragmentActivity
-) : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+) : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
     private lateinit var binding: RecycleViewUpcomingItemBinding
     private var moviesData: List<Movie> = listOf()
 
     @SuppressLint("notifyDataSetChanged")
-    fun setUpcomingMovies(data: List<Movie>) {
+    fun setWishlistMovies(data: List<Movie>) {
         moviesData = data
         notifyDataSetChanged()
     }
 
-    inner class UpcomingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class WishlistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: Movie) = with(binding) {
             titleUpcoming.text = movie.title
             genreUpcoming.text = movie.genre
@@ -35,7 +35,7 @@ class UpcomingAdapter(
                 object : OnItemClickListener {
                     override fun onMovieClickListener() {
                         val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, movie)
+                            putString(DetailsFragment.DETAILS_KEY, movie.id)
                         }
 
                         activity.supportFragmentManager
@@ -49,12 +49,12 @@ class UpcomingAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishlistViewHolder {
         binding = RecycleViewUpcomingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UpcomingViewHolder(binding.root)
+        return WishlistViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: WishlistViewHolder, position: Int) {
         holder.bind(moviesData[position])
     }
 

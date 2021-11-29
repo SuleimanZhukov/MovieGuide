@@ -24,6 +24,14 @@ class DetailsViewModel(
 
     fun removeMovieFromWishlist(movie: Movie) = removeFromWishlist(movie)
 
+    fun getMovieById(id: String) = getMovieByIdFromDB(id)
+
+    private fun getMovieByIdFromDB(id: String) {
+        launch(Dispatchers.IO) {
+            detailsLiveData.postValue(AppState.SuccessGetMovieFromWishlist(repository.getMovieByIdFromDB(id)))
+        }
+    }
+
     private fun removeFromWishlist(movie: Movie) {
         launch(Dispatchers.IO) {
             detailsLiveData.postValue(AppState.SuccessRemoveFromWishlist(repository.removeFromDB(movie)))

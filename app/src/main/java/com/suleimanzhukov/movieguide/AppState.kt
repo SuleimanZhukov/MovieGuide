@@ -12,6 +12,7 @@ sealed class AppState {
     data class SuccessWishlist(val wishlistMovies: List<Movie>) : AppState()
     data class SuccessSaveToWishlist(val wishlistMovie: Movie) : AppState()
     data class SuccessRemoveFromWishlist(val wishlistMovie: Movie) : AppState()
+    data class SuccessGetMovieFromWishlist(val wishlistMovie: Movie) : AppState()
 
     //Error
     data class Error(val error: Throwable) : AppState()

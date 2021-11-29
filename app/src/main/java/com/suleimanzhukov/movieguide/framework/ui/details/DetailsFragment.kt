@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.Observer
 import coil.load
 import com.suleimanzhukov.movieguide.AppState
+import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.FragmentDetailsBinding
 import com.suleimanzhukov.movieguide.model.entities.Movie
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -45,6 +47,12 @@ class DetailsFragment : Fragment() {
                 overviewDetails.text = appState.movie.overview
                 posterDetails.load(appState.movie.poster)
             }
+            is AppState.SuccessGetMovieFromWishlist -> {
+                titleDetails.text = appState.wishlistMovie.title
+                genreDetails.text = appState.wishlistMovie.genre
+                overviewDetails.text = appState.wishlistMovie.overview
+                posterDetails.load(appState.wishlistMovie.poster)
+            }
             else -> {
 
             }
@@ -60,8 +68,10 @@ class DetailsFragment : Fragment() {
         wishlistButton.setOnClickListener {
             movie.wishlist = !movie.wishlist
             if (movie.wishlist) {
+                wishlistButton.load(R.drawable.red_heart)
                 detailsViewModel.addMovieToWishlist(movie)
             } else {
+                wishlistButton.load(R.drawable.empty_heart)
                 detailsViewModel.removeMovieFromWishlist(movie)
             }
 

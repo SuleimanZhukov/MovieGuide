@@ -3,6 +3,7 @@ package com.suleimanzhukov.movieguide.framework.ui.wishlist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.suleimanzhukov.movieguide.AppState
+import com.suleimanzhukov.movieguide.model.entities.Movie
 import com.suleimanzhukov.movieguide.model.repository.Repository
 import kotlinx.coroutines.*
 
