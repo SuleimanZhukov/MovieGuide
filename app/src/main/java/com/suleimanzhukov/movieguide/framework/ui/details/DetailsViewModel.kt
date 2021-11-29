@@ -27,28 +27,28 @@ class DetailsViewModel(
     fun getMovieById(id: String) = getMovieByIdFromDB(id)
 
     private fun getMovieByIdFromDB(id: String) {
-        launch(Dispatchers.IO) {
+        Thread {
             detailsLiveData.postValue(AppState.SuccessGetMovieFromWishlist(repository.getMovieByIdFromDB(id)))
-        }
+        }.start()
     }
 
     private fun removeFromWishlist(movie: Movie) {
-        launch(Dispatchers.IO) {
+        Thread {
             detailsLiveData.postValue(AppState.SuccessRemoveFromWishlist(repository.removeFromDB(movie)))
-        }
+        }.start()
     }
 
     private fun addToWishlist(movie: Movie) {
-        launch(Dispatchers.IO) {
+        Thread {
             detailsLiveData.postValue(AppState.SuccessSaveToWishlist(repository.saveMovieToDB(movie)))
-        }
+        }.start()
     }
 
     private fun getDataFromServer(id: String) {
         detailsLiveData.value = AppState.Loading
-        launch(Dispatchers.IO) {
+        Thread {
             detailsLiveData.postValue(AppState.SuccessOneMovie(repository.getMovieById(id)))
-        }
+        }.start()
     }
 
 }

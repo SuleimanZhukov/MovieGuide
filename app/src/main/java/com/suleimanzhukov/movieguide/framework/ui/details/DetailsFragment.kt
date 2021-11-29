@@ -30,7 +30,11 @@ class DetailsFragment : Fragment() {
         val movie: Movie? = arguments?.getParcelable(DETAILS_KEY)
         addToWishlist(movie!!)
         detailsViewModel.getDetailsLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
-        detailsViewModel.getDetailsData(movie.id)
+        if (movie.wishlist) {
+            detailsViewModel.getMovieById(movie.id)
+        } else {
+            detailsViewModel.getDetailsData(movie.id)
+        }
     }
 
     private fun renderData(appState: AppState) = with(binding) {
