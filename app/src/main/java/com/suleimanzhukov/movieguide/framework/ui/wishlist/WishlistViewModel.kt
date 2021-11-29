@@ -19,8 +19,8 @@ class WishlistViewModel(
 
     private fun getDataFromDB() {
         wishlistLiveData.value = AppState.Loading
-        launch(Dispatchers.IO) {
+        Thread {
             wishlistLiveData.postValue(AppState.SuccessWishlist(repository.getAllMoviesFromDB()))
-        }
+        }.start()
     }
 }

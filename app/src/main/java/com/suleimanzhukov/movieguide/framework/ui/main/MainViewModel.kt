@@ -21,9 +21,9 @@ class MainViewModel(
 
     private fun getDataFromServer() {
         mainLiveData.value = AppState.Loading
-        launch(Dispatchers.IO) {
+        Thread {
             mainLiveData.postValue(AppState.SuccessNowPlaying(repository.getNowPlayingMovies()))
             mainLiveData.postValue(AppState.SuccessUpcoming(repository.getUpcomingMovies()))
-        }
+        }.start()
     }
 }
