@@ -15,7 +15,7 @@ import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
 import com.suleimanzhukov.movieguide.model.entities.Movie
 
 class WishlistAdapter(
-    private val activity: FragmentActivity
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<WishlistAdapter.WishlistViewHolder>() {
     private lateinit var binding: RecycleViewUpcomingItemBinding
     private var moviesData: List<Movie> = listOf()
@@ -31,21 +31,7 @@ class WishlistAdapter(
             titleUpcoming.text = movie.title
             genreUpcoming.text = movie.genre
             imageViewUpcoming.load(movie.poster)
-            root.setOnClickListener {
-                object : OnItemClickListener {
-                    override fun onMovieClickListener() {
-                        val bundle = Bundle().apply {
-                            putString(DetailsFragment.DETAILS_KEY, movie.id)
-                        }
-
-                        activity.supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
-                            .addToBackStack("")
-                            .commitAllowingStateLoss()
-                    }
-                }
-            }
+            root.setOnClickListener { onItemClickListener.onMovieClickListener() }
         }
     }
 

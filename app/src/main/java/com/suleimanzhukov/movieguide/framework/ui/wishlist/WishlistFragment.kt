@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.suleimanzhukov.movieguide.AppState
+import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.FragmentMainBinding
 import com.suleimanzhukov.movieguide.databinding.FragmentWishlistBinding
+import com.suleimanzhukov.movieguide.framework.OnItemClickListener
 import com.suleimanzhukov.movieguide.framework.adapters.NowPlayingAdapter
 import com.suleimanzhukov.movieguide.framework.adapters.UpcomingAdapter
 import com.suleimanzhukov.movieguide.framework.adapters.WishlistAdapter
+import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
 import com.suleimanzhukov.movieguide.framework.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Appendable
@@ -44,7 +47,19 @@ class WishlistFragment : Fragment() {
                 Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
             }
             is AppState.SuccessWishlist -> {
-                val wishlistAdapter = WishlistAdapter(requireActivity())
+                val wishlistAdapter = WishlistAdapter(object : OnItemClickListener {
+                    override fun onMovieClickListener() {
+                        val bundle = Bundle().apply {
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.wishlistMovies[0])
+                        }
+
+                        activity?.supportFragmentManager!!
+                            .beginTransaction()
+                            .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
+                            .addToBackStack("")
+                            .commitAllowingStateLoss()
+                    }
+                })
 
                 wishlistAdapter.setWishlistMovies(appState.wishlistMovies)
 

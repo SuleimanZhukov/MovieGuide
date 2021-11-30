@@ -28,8 +28,11 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val movie: Movie? = arguments?.getParcelable(DETAILS_KEY)
+
         addToWishlist(movie!!)
+
         detailsViewModel.getDetailsLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+
         if (movie.wishlist) {
             detailsViewModel.getMovieById(movie.id)
         } else {
@@ -74,9 +77,6 @@ class DetailsFragment : Fragment() {
                 toWishlistFunction(movie)
             } else {
                 (activity as MainActivity).requestPermission()
-                if ((activity as MainActivity).checkPermission()) {
-                    toWishlistFunction(movie)
-                }
             }
         }
     }

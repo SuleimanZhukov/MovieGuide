@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel(
     private val repository: Repository
-) : ViewModel(), CoroutineScope by MainScope() {
+) : ViewModel() {
 
     private val detailsLiveData: MutableLiveData<AppState> = MutableLiveData()
 

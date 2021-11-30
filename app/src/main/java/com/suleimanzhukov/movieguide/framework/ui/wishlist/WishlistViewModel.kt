@@ -9,7 +9,7 @@ import kotlinx.coroutines.*
 
 class WishlistViewModel(
     private val repository: Repository
-) : ViewModel(), CoroutineScope by MainScope() {
+) : ViewModel() {
 
     private val wishlistLiveData: MutableLiveData<AppState> = MutableLiveData()
 

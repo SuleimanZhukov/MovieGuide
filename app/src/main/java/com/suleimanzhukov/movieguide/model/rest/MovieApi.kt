@@ -4,8 +4,7 @@ import com.suleimanzhukov.movieguide.model.restentities.Items
 import com.suleimanzhukov.movieguide.model.restentities.MovieDTO
 import com.suleimanzhukov.movieguide.model.restentities.PosterDTO
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MovieApi {
     @GET("Title/k_qnnx4mmj")
@@ -13,9 +12,10 @@ interface MovieApi {
         @Query("") id: String
     ): Call<Items>
 
-    @GET("Posters/k_qnnx4mmj/tt2953050")
+    @GET("Posters/{apiKey}/{id}")
     fun getMoviePosterById(
-//        @Query("id") id: String
+        @Query("apiKey") apiKey: String,
+        @Query("id") id: String
     ): Call<PosterDTO>
 
     @GET("InTheaters/k_qnnx4mmj")

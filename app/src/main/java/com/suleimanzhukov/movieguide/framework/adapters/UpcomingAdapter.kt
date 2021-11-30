@@ -15,7 +15,7 @@ import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
 import com.suleimanzhukov.movieguide.model.entities.Movie
 
 class UpcomingAdapter(
-    private val activity: FragmentActivity
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
     private lateinit var binding: RecycleViewUpcomingItemBinding
     private var moviesData: List<Movie> = listOf()
@@ -31,21 +31,7 @@ class UpcomingAdapter(
             titleUpcoming.text = movie.title
             genreUpcoming.text = movie.genre
             imageViewUpcoming.load(movie.poster)
-            root.setOnClickListener {
-                object : OnItemClickListener {
-                    override fun onMovieClickListener() {
-                        val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, movie)
-                        }
-
-                        activity.supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
-                            .addToBackStack("")
-                            .commitAllowingStateLoss()
-                    }
-                }
-            }
+            root.setOnClickListener { onItemClickListener.onMovieClickListener() }
         }
     }
 

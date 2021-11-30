@@ -59,11 +59,11 @@ class MainFragment : Fragment() {
                 val nowPlayingAdapter = NowPlayingAdapter(object : OnItemClickListener {
                     override fun onMovieClickListener() {
                         val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, appState.nowPlayingMovies[2])
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.nowPlayingMovies[0])
                         }
 
                         activity?.supportFragmentManager!!
-                            .beginTransaction()
+                        .beginTransaction()
                             .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
                             .addToBackStack("")
                             .commitAllowingStateLoss()
@@ -76,7 +76,20 @@ class MainFragment : Fragment() {
                 recyclerViewNowPlaying.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             }
             is AppState.SuccessUpcoming -> {
-                val upcomingAdapter = UpcomingAdapter(requireActivity())
+                val upcomingAdapter = UpcomingAdapter(object : OnItemClickListener {
+                    override fun onMovieClickListener() {
+                        val bundle = Bundle().apply {
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.upcomingMovies[0])
+                        }
+
+                        activity?.supportFragmentManager!!
+                            .beginTransaction()
+                            .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
+                            .addToBackStack("")
+                            .commitAllowingStateLoss()
+                    }
+                })
+
 
                 upcomingAdapter.setUpcomingMovies(appState.upcomingMovies)
 
