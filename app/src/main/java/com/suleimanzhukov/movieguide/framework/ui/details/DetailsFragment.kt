@@ -13,6 +13,7 @@ import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.FragmentDetailsBinding
 import com.suleimanzhukov.movieguide.framework.MainActivity
 import com.suleimanzhukov.movieguide.model.entities.Movie
+import kotlinx.android.synthetic.main.fragment_details.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment : Fragment() {
@@ -34,6 +35,7 @@ class DetailsFragment : Fragment() {
         detailsViewModel.getDetailsLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
 
         if (movie.wishlist) {
+            wishlist_button.load(R.drawable.red_heart)
             detailsViewModel.getMovieById(movie.id)
         } else {
             detailsViewModel.getDetailsData(movie.id)
