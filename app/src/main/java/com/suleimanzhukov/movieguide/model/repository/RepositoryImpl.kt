@@ -8,19 +8,22 @@ import com.suleimanzhukov.movieguide.model.rest.MovieRepo
 class RepositoryImpl : Repository {
     override fun getMovieById(id: String): Movie {
         val dto = MovieRepo.api.getMovieById(id).execute().body()
-//        var postersDto = MovieRepo.api.getMoviePosterById(dto!!.id).execute().body()
-        /*if (postersDto!!.posters.size >= 2) {
-            var posterId = postersDto!!.posters[1].id
-            var posterPath = "https://imdb-api.com/posters/w500/$posterId"
-        } else {
-            var posterId = postersDto!!.posters[0].id
-            var posterPath = "https://imdb-api.com/posters/w500/$posterId"
-        }*/
-//        return Movie(dto!!.id, dto.title, dto.genres, dto.imDbRating, dto.overview, "", false)
-        return Movie("0", "John Wick 4", "Thriller, Crime", "7.8",
+        var postersDto = MovieRepo.api.getMoviePosterById(dto!!.id).execute().body()
+        var posterPath = ""
+        if (postersDto!!.posters.size >= 1) {
+            if (postersDto.posters.size >= 2) {
+                var posterId = postersDto.posters[1].id
+                posterPath = "https://imdb-api.com/posters/w500/$posterId"
+            } else {
+                var posterId = postersDto.posters[0].id
+                posterPath = "https://imdb-api.com/posters/w500/$posterId"
+            }
+        }
+        return Movie(dto!!.id, dto.title, dto.genres, dto.imDbRating, dto.overview, posterPath, false)
+        /*return Movie("0", "John Wick 4", "Thriller, Crime", "7.8",
             "In a realm known as Kumandra, a re-imagined Earth inhabited by an ancient civilization," +
                     " a warrior named Raya is determined to find the last dragon.",
-            "", false)
+            "", false)*/
     }
 
     override fun getNowPlayingMovies(): List<Movie> {
@@ -28,9 +31,12 @@ class RepositoryImpl : Repository {
         var nowPlayingMovies = mutableListOf<Movie>()
         val size = dto!!.items.size - 1
         for (i in 0..size) {
+            var posterPath = ""
             var postersDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
-            var posterId = postersDto!!.backdrops[0].id
-            val posterPath = "https://imdb-api.com/posters/w300/$posterId"
+            if (postersDto!!.posters.size >= 1) {
+                var posterId = postersDto.posters[0].id
+                posterPath = "https://imdb-api.com/posters/w300/$posterId"
+            }
             nowPlayingMovies.add(
                 Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
                     dto.items[i].imDbRating, "", posterPath, false)
@@ -51,14 +57,19 @@ class RepositoryImpl : Repository {
         val dto = MovieRepo.api.getUpcomingMovies().execute().body()
         var upcomingMovies = mutableListOf<Movie>()
         val size = dto!!.items.size - 1
-        for (i in 0..size) {
-            var postersDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
-            var posterId = postersDto!!.posters[0].id
-            var posterPath = "https://imdb-api.com/posters/w300/$posterId"
-            upcomingMovies.add(
-                Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
-                    dto.items[i].imDbRating, "", posterPath, false)
-            )
+        if (dto.items.size >= 1) {
+            for (i in 0..size) {
+                var posterPath = ""
+                var postersDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
+                if (postersDto!!.posters.size >= 1) {
+                    var posterId = postersDto!!.posters[0].id
+                    posterPath = "https://imdb-api.com/posters/w300/$posterId"
+                }
+                upcomingMovies.add(
+                    Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
+                        dto.items[i].imDbRating, "", posterPath, false)
+                )
+            }
         }
         /*val upcomingMovies = listOf(
             Movie("7", "John Wick 4", "Thriller, Crime", "7.8", "In a realm known as Kumandra, a re-imagined Earth inhabited by an ancient civilization," +

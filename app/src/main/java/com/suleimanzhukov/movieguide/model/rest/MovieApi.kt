@@ -7,14 +7,14 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface MovieApi {
-    @GET("Title/k_qnnx4mmj")
+    @GET("Title/k_qnnx4mmj/{id}")
     fun getMovieById(
-        @Query("") id: String
+        @Path("id") id: String
     ): Call<Items>
 
-    @GET("Posters/k_qnnx4mmj/tt1375666")
+    @GET("Posters/k_qnnx4mmj/{id}")
     fun getMoviePosterById(
-        @Query("id") id: String
+        @Path("id") id: String
     ): Call<PosterDTO>
 
     @GET("InTheaters/k_qnnx4mmj")
