@@ -20,10 +20,6 @@ class RepositoryImpl : Repository {
             }
         }
         return Movie(dto!!.id, dto.title, dto.genres, dto.imDbRating, dto.overview, posterPath, false)
-        /*return Movie("0", "John Wick 4", "Thriller, Crime", "7.8",
-            "In a realm known as Kumandra, a re-imagined Earth inhabited by an ancient civilization," +
-                    " a warrior named Raya is determined to find the last dragon.",
-            "", false)*/
     }
 
     override fun getNowPlayingMovies(): List<Movie> {
@@ -42,14 +38,6 @@ class RepositoryImpl : Repository {
                     dto.items[i].imDbRating, "", posterPath, false)
             )
         }
-
-        /*val nowPlayingMovies = listOf(
-            Movie("0", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("1", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("2", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("5", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("6", "John Wick 4", "Thriller, Crime", "7.8", "", "", false)
-        )*/
         return nowPlayingMovies
     }
 
@@ -62,7 +50,7 @@ class RepositoryImpl : Repository {
                 var posterPath = ""
                 var postersDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
                 if (postersDto!!.posters.size >= 1) {
-                    var posterId = postersDto!!.posters[0].id
+                    var posterId = postersDto.posters[0].id
                     posterPath = "https://imdb-api.com/posters/w300/$posterId"
                 }
                 upcomingMovies.add(
@@ -71,21 +59,33 @@ class RepositoryImpl : Repository {
                 )
             }
         }
-        /*val upcomingMovies = listOf(
-            Movie("7", "John Wick 4", "Thriller, Crime", "7.8", "In a realm known as Kumandra, a re-imagined Earth inhabited by an ancient civilization," +
-                    " a warrior named Raya is determined to find the last dragon.", "", false),
-            Movie("8", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("9", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("10", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("11", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("12", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("13", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("14", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("15", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("16", "John Wick 4", "Thriller, Crime", "7.8", "", "", false),
-            Movie("17", "John Wick 4", "Thriller, Crime", "7.8", "", "", false)
-        )*/
         return upcomingMovies
+    }
+
+    override fun searchForMovies(title: String): List<Movie> {
+        val dto = MovieRepo.api.searchForMovieByTitle(title).execute().body()
+        var searchResultMovies = mutableListOf<Movie>()
+        val size = dto!!.items.size - 1
+        var count = 0
+        if (dto.items.size >= 1) {
+            for (i in 0..size) {
+                var posterPath = ""
+                var postersDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
+                if (postersDto!!.posters.size >= 1) {
+                    var posterId = postersDto.posters[0].id
+                    posterPath = "https://imdb-api.com/posters/w300/$posterId"
+                }
+                searchResultMovies.add(
+                    Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
+                        dto.items[i].imDbRating, "", posterPath, false)
+                )
+                count++
+                if (count == 6) {
+                    break
+                }
+            }
+        }
+        return searchResultMovies
     }
 
     override fun saveMovieToDB(movie: Movie): Movie {

@@ -22,4 +22,9 @@ interface MovieApi {
 
     @GET("ComingSoon/k_qnnx4mmj")
     fun getUpcomingMovies(): Call<MovieDTO>
+
+    @GET("Search/k_qnnx4mmj/{expression}")
+    fun searchForMovieByTitle(
+        @Path("expression") title: String
+    ): Call<MovieDTO>
 }

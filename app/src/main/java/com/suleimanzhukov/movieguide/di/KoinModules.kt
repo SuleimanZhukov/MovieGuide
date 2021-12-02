@@ -2,6 +2,7 @@ package com.suleimanzhukov.movieguide.di
 
 import com.suleimanzhukov.movieguide.framework.ui.details.DetailsViewModel
 import com.suleimanzhukov.movieguide.framework.ui.main.MainViewModel
+import com.suleimanzhukov.movieguide.framework.ui.search.SearchViewModel
 import com.suleimanzhukov.movieguide.framework.ui.wishlist.WishlistViewModel
 import com.suleimanzhukov.movieguide.model.repository.Repository
 import com.suleimanzhukov.movieguide.model.repository.RepositoryImpl
@@ -14,4 +15,5 @@ val appModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { DetailsViewModel(get()) }
     viewModel { WishlistViewModel(get()) }
+    viewModel { SearchViewModel(get()) }
 }

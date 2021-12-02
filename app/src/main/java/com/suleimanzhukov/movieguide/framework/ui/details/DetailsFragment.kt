@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import coil.load
@@ -12,6 +13,7 @@ import com.suleimanzhukov.movieguide.AppState
 import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.FragmentDetailsBinding
 import com.suleimanzhukov.movieguide.framework.MainActivity
+import com.suleimanzhukov.movieguide.framework.ui.search.SearchFragment
 import com.suleimanzhukov.movieguide.model.entities.Movie
 import kotlinx.android.synthetic.main.fragment_details.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,6 +23,8 @@ class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var searchView: SearchView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -28,6 +32,7 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        searchFragment(view)
         val movie: Movie? = arguments?.getParcelable(DETAILS_KEY)
 
         addToWishlist(movie!!)
@@ -91,6 +96,17 @@ class DetailsFragment : Fragment() {
         } else {
             wishlistButton.load(R.drawable.empty_heart)
             detailsViewModel.removeMovieFromWishlist(movie)
+        }
+    }
+
+    private fun searchFragment(view: View) {
+        searchView = view.findViewById(R.id.search_view)
+        searchView.setOnClickListener {
+            activity?.supportFragmentManager!!
+                .beginTransaction()
+                .replace(R.id.container_de_fragmento, SearchFragment.newInstance())
+                .addToBackStack("")
+                .commitAllowingStateLoss()
         }
     }
 

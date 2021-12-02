@@ -7,6 +7,7 @@ interface Repository {
     fun getMovieById(id: String): Movie
     fun getNowPlayingMovies(): List<Movie>
     fun getUpcomingMovies(): List<Movie>
+    fun searchForMovies(title: String): List<Movie>
 
     //Database
     fun saveMovieToDB(movie: Movie): Movie
