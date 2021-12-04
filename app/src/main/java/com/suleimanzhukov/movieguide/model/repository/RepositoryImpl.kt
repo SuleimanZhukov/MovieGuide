@@ -27,15 +27,15 @@ class RepositoryImpl : Repository {
         var nowPlayingMovies = mutableListOf<Movie>()
         val size = dto!!.items.size - 1
         for (i in 0..size) {
-            var posterPath = ""
-            var postersDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
-            if (postersDto!!.posters.size >= 1) {
-                var posterId = postersDto.posters[0].id
-                posterPath = "https://imdb-api.com/posters/w300/$posterId"
+            var imagePath = ""
+            var imageDto = MovieRepo.api.getMovieImageById(dto.items[i].id).execute().body()
+            if (imageDto!!.images.size >= 1) {
+                var imageId = imageDto.images[0].id
+                imagePath = "https://imdb-api.com/posters/w300/$imageId"
             }
             nowPlayingMovies.add(
                 Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
-                    dto.items[i].imDbRating, "", posterPath, false)
+                    dto.items[i].imDbRating, "", imagePath, false)
             )
         }
         return nowPlayingMovies

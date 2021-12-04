@@ -32,7 +32,6 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchFragment(view)
         val movie: Movie? = arguments?.getParcelable(DETAILS_KEY)
 
         addToWishlist(movie!!)
@@ -96,17 +95,6 @@ class DetailsFragment : Fragment() {
         } else {
             wishlistButton.load(R.drawable.empty_heart)
             detailsViewModel.removeMovieFromWishlist(movie)
-        }
-    }
-
-    private fun searchFragment(view: View) {
-        searchView = view.findViewById(R.id.search_view)
-        searchView.setOnClickListener {
-            activity?.supportFragmentManager!!
-                .beginTransaction()
-                .replace(R.id.container_de_fragmento, SearchFragment.newInstance())
-                .addToBackStack("")
-                .commitAllowingStateLoss()
         }
     }
 
