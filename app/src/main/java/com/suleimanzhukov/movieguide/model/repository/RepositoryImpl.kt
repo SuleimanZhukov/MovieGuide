@@ -19,7 +19,7 @@ class RepositoryImpl : Repository {
                 posterPath = "https://imdb-api.com/posters/w500/$posterId"
             }
         }
-        return Movie(dto!!.id, dto.title, dto.genres, dto.imDbRating, dto.overview, posterPath, false)
+        return Movie(dto!!.id, dto.title, dto.genres, dto.imDbRating, dto.overview ?: "", posterPath, false)
     }
 
     override fun getNowPlayingMovies(): List<Movie> {
@@ -28,9 +28,9 @@ class RepositoryImpl : Repository {
         val size = dto!!.items.size - 1
         for (i in 0..size) {
             var imagePath = ""
-            var imageDto = MovieRepo.api.getMovieImageById(dto.items[i].id).execute().body()
-            if (imageDto!!.images.size >= 1) {
-                var imageId = imageDto.images[0].id
+            var imageDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
+            if (imageDto!!.posters.size >= 1) {
+                var imageId = imageDto.posters[0].id
                 imagePath = "https://imdb-api.com/posters/w300/$imageId"
             }
             nowPlayingMovies.add(

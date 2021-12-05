@@ -1,6 +1,5 @@
 package com.suleimanzhukov.movieguide.model.rest
 
-import com.suleimanzhukov.movieguide.model.restentities.ImageDTO
 import com.suleimanzhukov.movieguide.model.restentities.Items
 import com.suleimanzhukov.movieguide.model.restentities.MovieDTO
 import com.suleimanzhukov.movieguide.model.restentities.PosterDTO
@@ -17,11 +16,6 @@ interface MovieApi {
     fun getMoviePosterById(
         @Path("id") id: String
     ): Call<PosterDTO>
-
-    @GET("Images/k_qnnx4mmj/{id}/Short")
-    fun getMovieImageById(
-        @Path("id") id: String
-    ): Call<ImageDTO>
 
     @GET("InTheaters/k_qnnx4mmj")
     fun getNowPlayingMovies(): Call<MovieDTO>
