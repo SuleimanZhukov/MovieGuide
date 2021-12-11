@@ -5,18 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.suleimanzhukov.movieguide.AppState
 import com.suleimanzhukov.movieguide.R
 import com.suleimanzhukov.movieguide.databinding.FragmentSearchBinding
+import com.suleimanzhukov.movieguide.framework.MainActivity
+import com.suleimanzhukov.movieguide.framework.OnItemClickListener
+import com.suleimanzhukov.movieguide.framework.adapters.NowPlayingAdapter
+import com.suleimanzhukov.movieguide.framework.adapters.SearchAdapter
+import com.suleimanzhukov.movieguide.framework.adapters.UpcomingAdapter
+import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
+import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
     private val searchViewModel: SearchViewModel by viewModel()
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-
-    private var searchView: SearchView? = null
+    private var searchText: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
@@ -25,22 +34,46 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchView = view.findViewById(R.id.search_view)
-        searchViewModel.getSearchLiveData().observe(viewLifecycleOwner, Observer { renderData() })
+        searchText = arguments?.getString(SEARCH_KEY)
+        searchViewModel.getMovies(searchText!!)
+        searchViewModel.getSearchLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
     }
 
-    private fun renderData() {
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                TODO("Not yet implemented")
-            }
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Loading -> {
 
-            override fun onQueryTextChange(text: String?): Boolean {
-                searchViewModel.getMovies(text!!)
-                return true
             }
+            is AppState.Error -> {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+            is AppState.SuccessNowPlaying -> {
 
-        })
+            }
+            is AppState.SuccessUpcoming -> {
+
+            }
+            is AppState.SuccessSearch -> {
+                val searchAdapter = SearchAdapter(object : OnItemClickListener {
+                    override fun onMovieClickListener() {
+                        val bundle = Bundle().apply {
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.searchMovies[0])
+                        }
+
+                        activity?.supportFragmentManager!!
+                            .beginTransaction()
+                            .replace(R.id.container_de_fragmento, DetailsFragment.newInstance(bundle))
+                            .addToBackStack("")
+                            .commitAllowingStateLoss()
+                    }
+                })
+
+                searchAdapter.setSearchResultMovies(appState.searchMovies)
+
+                search_result_recycler_view.adapter = searchAdapter
+                search_result_recycler_view.layoutManager = LinearLayoutManager(context)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -49,6 +82,12 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = SearchFragment()
+        const val SEARCH_KEY = "SEARCH_KEY"
+
+        fun newInstance(bundle: Bundle): SearchFragment {
+            var fragment = SearchFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

@@ -65,19 +65,18 @@ class RepositoryImpl : Repository {
     override fun searchForMovies(title: String): List<Movie> {
         val dto = MovieRepo.api.searchForMovieByTitle(title).execute().body()
         var searchResultMovies = mutableListOf<Movie>()
-        val size = dto!!.items.size - 1
+        val size = dto!!.results.size - 1
         var count = 0
-        if (dto.items.size >= 1) {
+        if (dto.results.size >= 1) {
             for (i in 0..size) {
                 var posterPath = ""
-                var postersDto = MovieRepo.api.getMoviePosterById(dto.items[i].id).execute().body()
+                var postersDto = MovieRepo.api.getMoviePosterById(dto.results[i].id).execute().body()
                 if (postersDto!!.posters.size >= 1) {
                     var posterId = postersDto.posters[0].id
                     posterPath = "https://imdb-api.com/posters/w300/$posterId"
                 }
                 searchResultMovies.add(
-                    Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
-                        dto.items[i].imDbRating, "", posterPath, false)
+                    Movie(dto.results[i].id, dto.results[i].title, "", "", "", posterPath, false)
                 )
                 count++
                 if (count == 6) {

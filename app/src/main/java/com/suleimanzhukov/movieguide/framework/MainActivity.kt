@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -16,6 +15,7 @@ import com.suleimanzhukov.movieguide.framework.ui.search.SearchFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
+    private var submittedText: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         requestPermission()
 
-        searchFragment()
+        searchView = findViewById(R.id.search_view)
+        search()
 
         if (savedInstanceState == null) {
             supportFragmentManager
@@ -37,15 +38,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun searchFragment() {
-        searchView = findViewById(R.id.search_view)
-        searchView.setOnClickListener {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container_de_fragmento, SearchFragment.newInstance())
-                .addToBackStack("")
-                .commitAllowingStateLoss()
-        }
+    private fun search() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(text: String?): Boolean {
+                val bundle = Bundle().apply {
+                    putString(SearchFragment.SEARCH_KEY, text)
+                }
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.container_de_fragmento, SearchFragment.newInstance(bundle))
+                    .addToBackStack("")
+                    .commitAllowingStateLoss()
+
+                return true
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                return true
+            }
+
+        })
     }
 
     fun checkPermission() =
