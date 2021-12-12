@@ -52,9 +52,9 @@ class MainFragment : Fragment() {
             }
             is AppState.SuccessNowPlaying -> {
                 val nowPlayingAdapter = NowPlayingAdapter(object : OnItemClickListener {
-                    override fun onMovieClickListener() {
+                    override fun onMovieClickListener(position: Int) {
                         val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, appState.nowPlayingMovies[0])
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.nowPlayingMovies[position])
                         }
 
                         activity?.supportFragmentManager!!
@@ -72,9 +72,9 @@ class MainFragment : Fragment() {
             }
             is AppState.SuccessUpcoming -> {
                 val upcomingAdapter = UpcomingAdapter(object : OnItemClickListener {
-                    override fun onMovieClickListener() {
+                    override fun onMovieClickListener(position: Int) {
                         val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, appState.upcomingMovies[0])
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.upcomingMovies[position])
                         }
 
                         activity?.supportFragmentManager!!

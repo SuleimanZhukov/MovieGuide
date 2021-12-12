@@ -55,9 +55,9 @@ class SearchFragment : Fragment() {
             }
             is AppState.SuccessSearch -> {
                 val searchAdapter = SearchAdapter(object : OnItemClickListener {
-                    override fun onMovieClickListener() {
+                    override fun onMovieClickListener(position: Int) {
                         val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, appState.searchMovies[0])
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.searchMovies[position])
                         }
 
                         activity?.supportFragmentManager!!

@@ -10,16 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.suleimanzhukov.movieguide.AppState
 import com.suleimanzhukov.movieguide.R
-import com.suleimanzhukov.movieguide.databinding.FragmentMainBinding
 import com.suleimanzhukov.movieguide.databinding.FragmentWishlistBinding
 import com.suleimanzhukov.movieguide.framework.OnItemClickListener
-import com.suleimanzhukov.movieguide.framework.adapters.NowPlayingAdapter
-import com.suleimanzhukov.movieguide.framework.adapters.UpcomingAdapter
 import com.suleimanzhukov.movieguide.framework.adapters.WishlistAdapter
 import com.suleimanzhukov.movieguide.framework.ui.details.DetailsFragment
-import com.suleimanzhukov.movieguide.framework.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.Appendable
 
 class WishlistFragment : Fragment() {
 
@@ -48,9 +43,9 @@ class WishlistFragment : Fragment() {
             }
             is AppState.SuccessWishlist -> {
                 val wishlistAdapter = WishlistAdapter(object : OnItemClickListener {
-                    override fun onMovieClickListener() {
+                    override fun onMovieClickListener(position: Int) {
                         val bundle = Bundle().apply {
-                            putParcelable(DetailsFragment.DETAILS_KEY, appState.wishlistMovies[0])
+                            putParcelable(DetailsFragment.DETAILS_KEY, appState.wishlistMovies[position])
                         }
 
                         activity?.supportFragmentManager!!

@@ -28,12 +28,12 @@ class NowPlayingAdapter(
     }
 
     inner class NowPlayingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(movie: Movie) = with(binding) {
+        fun bind(movie: Movie, position: Int) = with(binding) {
             titleNowPlaying.text = movie.title
             genreNowPlaying.text = movie.genre
             ratingNowPlaying.text = movie.rating
             imageViewNowPlaying.load(movie.poster)
-            root.setOnClickListener { onItemClickListener.onMovieClickListener() }
+            root.setOnClickListener { onItemClickListener.onMovieClickListener(position) }
         }
     }
 
@@ -43,7 +43,7 @@ class NowPlayingAdapter(
     }
 
     override fun onBindViewHolder(holder: NowPlayingViewHolder, position: Int) {
-        holder.bind(moviesData[position])
+        holder.bind(moviesData[position], position)
     }
 
     override fun getItemCount(): Int {

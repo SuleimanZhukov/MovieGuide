@@ -24,10 +24,10 @@ class SearchAdapter(
     }
 
     inner class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(movie: Movie) = with(binding) {
+        fun bind(movie: Movie, position: Int) = with(binding) {
             titleUpcoming.text = movie.title
             imageViewUpcoming.load(movie.poster)
-            root.setOnClickListener { onItemClickListener.onMovieClickListener() }
+            root.setOnClickListener { onItemClickListener.onMovieClickListener(position) }
         }
     }
 
@@ -37,7 +37,7 @@ class SearchAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(moviesData[position])
+        holder.bind(moviesData[position], position)
     }
 
     override fun getItemCount(): Int {
