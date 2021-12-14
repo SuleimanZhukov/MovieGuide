@@ -19,7 +19,7 @@ class RepositoryImpl : Repository {
                 posterPath = "https://imdb-api.com/posters/w500/$posterId"
             }
         }
-        return Movie(dto!!.id, dto.title, dto.genres, dto.imDbRating, dto.overview ?: "", posterPath, false)
+        return Movie(dto!!.id, dto.title, dto.genres, dto.imDbRating, dto.plot ?: "", posterPath, false)
     }
 
     override fun getNowPlayingMovies(): List<Movie> {
@@ -35,7 +35,7 @@ class RepositoryImpl : Repository {
             }
             nowPlayingMovies.add(
                 Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
-                    dto.items[i].imDbRating, "", imagePath, false)
+                    dto.items[i].imDbRating, dto.items[i].plot, imagePath, false)
             )
         }
         return nowPlayingMovies
@@ -55,7 +55,7 @@ class RepositoryImpl : Repository {
                 }
                 upcomingMovies.add(
                     Movie(dto.items[i].id, dto.items[i].title, dto.items[i].genres,
-                        dto.items[i].imDbRating, "", posterPath, false)
+                        dto.items[i].imDbRating, dto.items[i].plot, posterPath, false)
                 )
             }
         }
